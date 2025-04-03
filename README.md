@@ -129,3 +129,5 @@ For databases, you can use:
 
 - MySQL if you are using SQL ❌
 - MongoDB if you are using NoSQL ✅
+
+This is the link to the actual project website; https://roadmap.sh/projects/blogging-platform-api
