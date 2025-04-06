@@ -7,9 +7,8 @@ import jakarta.persistence.GenerationType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document("BlogPost")
 public class BlogPost {
-    // This represents the entity for a Blog Post...
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
