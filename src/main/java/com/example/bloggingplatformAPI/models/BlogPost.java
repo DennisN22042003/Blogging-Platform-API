@@ -2,36 +2,29 @@ package com.example.bloggingplatformAPI.models;
 
 import java.util.*;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("BlogPost")
+@Document(collection="blog_posts")
 public class BlogPost {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-
-    String title;
-
-    String content;
-
-    String category;
-
-    ArrayList<String> tags;
+    private String id;
+    private String title;
+    private String content;
+    private String category;
+    private ArrayList<String> tags;
 
     // Constructor
     public BlogPost() {
-
     }
 
     // Getters and Setters
-    public Integer getId() {
+    public String getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

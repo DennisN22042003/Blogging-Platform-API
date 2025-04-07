@@ -1,8 +1,13 @@
 package com.example.bloggingplatformAPI.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.bloggingplatformAPI.models.BlogPost;
+
+import java.util.List;
+
 @Repository
-public interface BlogRepository extends JpaRepository {
+public interface BlogRepository extends MongoRepository<BlogPost, Long> {
+    // TODO: Custom methods....
 }

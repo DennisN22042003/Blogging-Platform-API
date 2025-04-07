@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
@@ -13,28 +14,36 @@ import org.springframework.http.HttpStatus;
 
 import com.example.bloggingplatformAPI.repositories.BlogRepository;
 import com.example.bloggingplatformAPI.models.BlogPost;
+import com.example.bloggingplatformAPI.Services.BlogService;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/api/v1/")
 public class BlogController {
     private final BlogRepository blogRepository;
+    private final BlogService blogService;
 
-    public BlogController(BlogRepository blogRepository) {
+    public BlogController(BlogRepository blogRepository, BlogService blogService) {
         this.blogRepository = blogRepository;
+        this.blogService = blogService;
     }
 
     @PostMapping("create/post")
-    public ResponseEntity<BlogPost> createBlogPost(@RequestBody BlogPost blogPost) {
-        blogRepository.save(blogPost);
+    public ResponseEntity<?> createBlogPost(
+            @RequestParam String title,
+            @RequestParam String content,
+            @RequestParam String category
+    ) {
+        BlogPost blogPost = blogService.createNewBlogPost(title, content, category);
         return ResponseEntity.status(HttpStatus.CREATED).body(blogPost);
     }
 
     @PutMapping("update/post/{id}")
-    public ResponseEntity<BlogPost> updateBlogPost(@PathVariable Long id) {
-        Optional<BlogPost> optionalBlogPost = blogRepository.findById(id);
+    public ResponseEntity<?> updateBlogPost(@PathVariable String id) {
+        Optional<BlogPost> optionalBlogPost = blogRepository.findById(Long.valueOf(id));
         if (optionalBlogPost.isPresent()) {
             return ResponseEntity.ok(optionalBlogPost.get());
         } else {
@@ -43,9 +52,9 @@ public class BlogController {
     }
 
     @DeleteMapping("delete/post/{id}")
-    public ResponseEntity<String> deleteBlogPost(@PathVariable Long id) {
-        if (blogRepository.existsById(id)) {
-            blogRepository.deleteById(id);
+    public ResponseEntity<?> deleteBlogPost(@PathVariable String id) {
+        if (blogRepository.existsById(Long.valueOf(id))) {
+            blogRepository.deleteById(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -53,8 +62,8 @@ public class BlogController {
     }
 
     @GetMapping("fetch/post/{id}")
-    public ResponseEntity<BlogPost> fetchBlogPost(@PathVariable Long id) {
-        Optional<BlogPost> optionalBlogPost = blogRepository.findById(id);
+    public ResponseEntity<?> fetchBlogPost(@PathVariable String id) {
+        Optional<BlogPost> optionalBlogPost = blogRepository.findById(Long.valueOf(id));
         if (optionalBlogPost.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(optionalBlogPost.get());
         } else {
@@ -63,7 +72,7 @@ public class BlogController {
     }
 
     @GetMapping("fetch-all/post/")
-    public ResponseEntity<ArrayList<BlogPost>> fetchAllBlogPost() {
+    public ResponseEntity<?> fetchAllBlogPosts() {
         ArrayList<BlogPost> optionalBlogPosts = (ArrayList<BlogPost>) blogRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(optionalBlogPosts);
     }
