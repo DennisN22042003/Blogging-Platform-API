@@ -18,7 +18,6 @@ import com.example.bloggingplatformAPI.Services.BlogService;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/api/v1/")
@@ -43,7 +42,7 @@ public class BlogController {
 
     @PutMapping("update/post/{id}")
     public ResponseEntity<?> updateBlogPost(@PathVariable String id) {
-        Optional<BlogPost> optionalBlogPost = blogRepository.findById(Long.valueOf(id));
+        Optional<BlogPost> optionalBlogPost = blogRepository.findById(id);
         if (optionalBlogPost.isPresent()) {
             return ResponseEntity.ok(optionalBlogPost.get());
         } else {
@@ -53,8 +52,8 @@ public class BlogController {
 
     @DeleteMapping("delete/post/{id}")
     public ResponseEntity<?> deleteBlogPost(@PathVariable String id) {
-        if (blogRepository.existsById(Long.valueOf(id))) {
-            blogRepository.deleteById(Long.valueOf(id));
+        if (blogRepository.existsById(id)) {
+            blogRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -63,7 +62,7 @@ public class BlogController {
 
     @GetMapping("fetch/post/{id}")
     public ResponseEntity<?> fetchBlogPost(@PathVariable String id) {
-        Optional<BlogPost> optionalBlogPost = blogRepository.findById(Long.valueOf(id));
+        Optional<BlogPost> optionalBlogPost = blogRepository.findById(id);
         if (optionalBlogPost.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(optionalBlogPost.get());
         } else {

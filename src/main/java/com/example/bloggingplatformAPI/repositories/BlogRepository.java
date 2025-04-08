@@ -8,6 +8,6 @@ import com.example.bloggingplatformAPI.models.BlogPost;
 import java.util.List;
 
 @Repository
-public interface BlogRepository extends MongoRepository<BlogPost, Long> {
+public interface BlogRepository extends MongoRepository<BlogPost, String> {
     // TODO: Custom methods....
 }
