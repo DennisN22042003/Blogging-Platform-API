@@ -1,5 +1,7 @@
 # Blogging Platform API(Java + Spring Boot)
 
+Porject URL: https://github.com/DennisN22042003/Blogging-Platform-API
+
 These are all the notes from the above personal project from Roadmap.sh
 
 You are required to create a simple RESTful API with basic CRUD operations for a personal blogging platform. CRUD stands for Create, Read, Update, and Delete.
